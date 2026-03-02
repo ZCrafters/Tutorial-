@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas SQL Elen - Perpustakaan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #e84393;
+            text-align: center;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .soal-box {
+            background: #fff5f8;
+            border-left: 5px solid #e84393;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .nomor-soal {
+            display: inline-block;
+            background: #e84393;
+            color: white;
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .perintah {
+            color: #d63031;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .sql-code {
+            background: #2d3436;
+            color: #55efc4;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        .sql-code::before {
+            content: "📝 JAWABAN SQL:";
+            display: block;
+            color: #fdcb6e;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .penjelasan {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px dashed #4caf50;
+        }
+        .penjelasan::before {
+            content: "💝 Elen, perhatikan ya:";
+            display: block;
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .tips-elen {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid #e17055;
+        }
+        .tips-elen h3 {
+            color: #d63031;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #e84393;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .copy-btn {
+            background: #00b894;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        .copy-btn:hover {
+            background: #00cec9;
+            transform: scale(1.05);
+        }
+        .penting {
+            background: #ff7675;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .rumus-dasar {
+            background: #74b9ff;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #e84393;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Tugas SQL Elen - Database Perpustakaan 🌸</h1>
+        <p class="subtitle">Universitas Siber Indonesia | Basis Data | Dosen: Dicky Hariyanto, M.Kom</p>
+        
+        <div class="penting">
+            ⚠️ Elen, ini tugas Ujian HER ya! Kerjakan dengan teliti! Semangat! 💪
+        </div>
+
+        <div class="rumus-dasar">
+            <strong>Rumus Dasar SQL yang Wajib Elen Hafal:</strong><br>
+            <span style="font-size: 24px;">CREATE → INSERT → SELECT → UPDATE → DELETE</span>
+        </div>
+
+        <div class="tips-elen">
+            <h3>📋 Petunjuk Pengerjaan untuk Elen:</h3>
+            <ol>
+                <li>Buka XAMPP → Start Apache & MySQL</li>
+                <li>Buka browser → ketik <strong>localhost/phpmyadmin</strong></li>
+                <li>Klik menu <strong>"SQL"</strong> untuk mengetik perintah</li>
+                <li>Atau buka <strong>Command Prompt (CMD)</strong> → ketik: <code>mysql -u root</code></li>
+                <li>Setelah selesai, screenshot hasilnya!</li>
+            </ol>
+        </div>
+
+        <!-- SOAL 1 -->
+        <div class="soal-box">
+            <span class="nomor-soal">1</span>
+            <span class="perintah">Buat Database dengan nama Perpustakaan</span>
+            
+            <div class="sql-code" id="sql1">
+CREATE DATABASE Perpustakaan;
+            </div>
+            <button class="copy-btn" onclick="copyText('sql1')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>CREATE DATABASE</strong> digunakan untuk membuat database baru. 
+                Nama databasenya adalah <strong>Perpustakaan</strong>. Jangan lupa titik koma (;) di akhir ya!
+            </div>
+        </div>
+
+        <!-- SOAL 2 -->
+        <div class="soal-box">
+            <span class="nomor-soal">2</span>
+            <span class="perintah">Aktifkan Database Perpustakaan</span>
+            
+            <div class="sql-code" id="sql2">
+USE Perpustakaan;
+            </div>
+            <button class="copy-btn" onclick="copyText('sql2')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>USE</strong> digunakan untuk memilih database yang akan digunakan. 
+                Ini seperti Elen masuk ke ruangan Perpustakaan, supaya bisa kerja di sana.
+            </div>
+        </div>
+
+        <!-- SOAL 3 -->
+        <div class="soal-box">
+            <span class="nomor-soal">3</span>
+            <span class="perintah">Buat table Anggota (id_anggota, nama, alamat, nomor_telpon)</span>
+            
+            <div class="sql-code" id="sql3">
+CREATE TABLE Anggota (
+    id_anggota INT PRIMARY KEY,
+    nama VARCHAR(50),
+    alamat VARCHAR(100),
+    nomor_telpon VARCHAR(15)
+);
+            </div>
+            <button class="copy-btn" onclick="copyText('sql3')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>CREATE TABLE</strong> untuk membuat tabel baru. 
+                <strong>INT</strong> = angka bulat, <strong>VARCHAR</strong> = teks. 
+                <strong>PRIMARY KEY</strong> = kunci utama (unik, tidak boleh sama).
+            </div>
+        </div>
+
+        <!-- SOAL 4 -->
+        <div class="soal-box">
+            <span class="nomor-soal">4</span>
+            <span class="perintah">Buat table Buku (kode_buku, judul, pengarang, stok)</span>
+            
+            <div class="sql-code" id="sql4">
+CREATE TABLE Buku (
+    kode_buku INT PRIMARY KEY,
+    judul VARCHAR(100),
+    pengarang VARCHAR(50),
+    stok INT
+);
+            </div>
+            <button class="copy-btn" onclick="copyText('sql4')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, sama seperti soal 3, tapi nama tabelnya <strong>Buku</strong> dan kolomnya berbeda. 
+                <strong>stok</strong> pakai INT karena angka (banyaknya buku).
+            </div>
+        </div>
+
+        <!-- SOAL 5 -->
+        <div class="soal-box">
+            <span class="nomor-soal">5</span>
+            <span class="perintah">Tambahkan kolom/field email pada table Anggota</span>
+            
+            <div class="sql-code" id="sql5">
+ALTER TABLE Anggota 
+ADD COLUMN email VARCHAR(50);
+            </div>
+            <button class="copy-btn" onclick="copyText('sql5')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>ALTER TABLE</strong> untuk mengubah struktur tabel yang sudah ada. 
+                <strong>ADD COLUMN</strong> = menambah kolom baru. Di sini nambah kolom email.
+            </div>
+        </div>
+
+        <!-- SOAL 6 -->
+        <div class="soal-box">
+            <span class="nomor-soal">6</span>
+            <span class="perintah">Isi 3 data pada table Anggota & 3 data pada table Buku</span>
+            
+            <p><strong>Data untuk Tabel Anggota:</strong></p>
+            <div class="sql-code" id="sql6a">
+-- Data 1: Munfi
+INSERT INTO Anggota VALUES (101, 'Munfi', 'Jl. Juanda', '08592839328', 'munfi@gmail.com');
+
+-- Data 2: Jupi
+INSERT INTO Anggota VALUES (102, 'Jupi', 'Jl. Wr. Supratman', '08112783738', 'jupi@gmail.com');
+
+-- Data 3: Elen (Kamu!)
+INSERT INTO Anggota VALUES (103, 'Elen', 'Jl. Poltangan', '0813048393', 'elen@gmail.com');
+            </div>
+            <button class="copy-btn" onclick="copyText('sql6a')">📋 Copy SQL Anggota</button>
+
+            <p style="margin-top: 20px;"><strong>Data untuk Tabel Buku:</strong></p>
+            <div class="sql-code" id="sql6b">
+-- Data 1
+INSERT INTO Buku VALUES (111, 'Basis Data Untuk Pemula', 'Ade Supriatna', 4);
+
+-- Data 2
+INSERT INTO Buku VALUES (222, 'Ekonomi Syariah', 'Bintang Gemilang', 7);
+
+-- Data 3
+INSERT INTO Buku VALUES (333, 'Desain Grafis', 'Sudiyono', 9);
+            </div>
+            <button class="copy-btn" onclick="copyText('sql6b')">📋 Copy SQL Buku</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>INSERT INTO</strong> untuk memasukkan data. 
+                <strong>VALUES</strong> diikuti oleh data sesuai urutan kolom. 
+                Teks pakai tanda petik ('), angka tidak perlu petik.
+            </div>
+
+            <p><strong>Hasil yang akan muncul:</strong></p>
+            <table>
+                <tr><th>id_anggota</th><th>nama</th><th>alamat</th><th>nomor_telpon</th><th>email</th></tr>
+                <tr><td>101</td><td>Munfi</td><td>Jl. Juanda</td><td>08592839328</td><td>munfi@gmail.com</td></tr>
+                <tr><td>102</td><td>Jupi</td><td>Jl. Wr. Supratman</td><td>08112783738</td><td>jupi@gmail.com</td></tr>
+                <tr><td>103</td><td>Elen</td><td>Jl. Poltangan</td><td>0813048393</td><td>elen@gmail.com</td></tr>
+            </table>
+        </div>
+
+        <!-- SOAL 7 -->
+        <div class="soal-box">
+            <span class="nomor-soal">7</span>
+            <span class="perintah">Ubah nomor telpon Elen menjadi 0811111111</span>
+            
+            <div class="sql-code" id="sql7">
+UPDATE Anggota 
+SET nomor_telpon = '0811111111' 
+WHERE nama = 'Elen';
+            </div>
+            <button class="copy-btn" onclick="copyText('sql7')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>UPDATE</strong> untuk mengubah data. 
+                <strong>SET</strong> = nilai yang baru, <strong>WHERE</strong> = kondisi (yang mana yang diubah). 
+                Hati-hati! Kalau lupa WHERE, semua data akan berubah!
+            </div>
+        </div>
+
+        <!-- SOAL 8 -->
+        <div class="soal-box">
+            <span class="nomor-soal">8</span>
+            <span class="perintah">Ubah nama pengarang Ekonomi Syariah menjadi Bintang Purnama</span>
+            
+            <div class="sql-code" id="sql8">
+UPDATE Buku 
+SET pengarang = 'Bintang Purnama' 
+WHERE judul = 'Ekonomi Syariah';
+            </div>
+            <button class="copy-btn" onclick="copyText('sql8')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, sama seperti soal 7, tapi tabelnya <strong>Buku</strong>. 
+                Kita cari buku yang judulnya 'Ekonomi Syariah', lalu ganti pengarangnya.
+            </div>
+        </div>
+
+        <!-- SOAL 9 -->
+        <div class="soal-box">
+            <span class="nomor-soal">9</span>
+            <span class="perintah">Tampilkan judul dan pengarang dengan stok terbanyak</span>
+            
+            <div class="sql-code" id="sql9">
+SELECT judul, pengarang 
+FROM Buku 
+WHERE stok = (SELECT MAX(stok) FROM Buku);
+            </div>
+            <button class="copy-btn" onclick="copyText('sql9')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, ini sedikit rumit. Kita pakai <strong>SELECT</strong> di dalam SELECT (subquery). 
+                <strong>MAX(stok)</strong> = cari nilai stok paling besar. 
+                Hasilnya: <strong>Desain Grafis</strong> karena stoknya 9 (paling banyak).
+            </div>
+            
+            <p><strong>Atau cara lebih simpel (kalau hanya 1 yang terbanyak):</strong></p>
+            <div class="sql-code" id="sql9b">
+SELECT judul, pengarang, stok 
+FROM Buku 
+ORDER BY stok DESC 
+LIMIT 1;
+            </div>
+            <button class="copy-btn" onclick="copyText('sql9b')">📋 Copy SQL Alternatif</button>
+            
+            <div class="penjelasan">
+                Cara ini: urutkan dari stok terbesar (DESC), lalu ambil 1 saja (LIMIT 1). Lebih mudah dipahami ya Elen!
+            </div>
+        </div>
+
+        <!-- SOAL 10 -->
+        <div class="soal-box">
+            <span class="nomor-soal">10</span>
+            <span class="perintah">Hapus buku dengan judul Desain Grafis</span>
+            
+            <div class="sql-code" id="sql10">
+DELETE FROM Buku 
+WHERE judul = 'Desain Grafis';
+            </div>
+            <button class="copy-btn" onclick="copyText('sql10')">📋 Copy SQL</button>
+            
+            <div class="penjelasan">
+                Elen, perintah <strong>DELETE FROM</strong> untuk menghapus data. 
+                Jangan lupa <strong>WHERE</strong> ya! Kalau lupa WHERE, semua data di tabel akan terhapus!
+            </div>
+        </div>
+
+        <!-- RINGKASAN -->
+        <div class="tips-elen">
+            <h3>📝 Ringkasan Perintah SQL untuk Elen:</h3>
+            <table>
+                <tr>
+                    <th>Perintah</th>
+                    <th>Fungsi</th>
+                    <th>Contoh</th>
+                </tr>
+                <tr>
+                    <td>CREATE DATABASE</td>
+                    <td>Buat database baru</td>
+                    <td>CREATE DATABASE Perpustakaan;</td>
+                </tr>
+                <tr>
+                    <td>USE</td>
+                    <td>Pilih database</td>
+                    <td>USE Perpustakaan;</td>
+                </tr>
+                <tr>
+                    <td>CREATE TABLE</td>
+                    <td>Buat tabel baru</td>
+                    <td>CREATE TABLE Anggota (...);</td>
+                </tr>
+                <tr>
+                    <td>ALTER TABLE</td>
+                    <td>Ubah struktur tabel</td>
+                    <td>ALTER TABLE ... ADD COLUMN ...;</td>
+                </tr>
+                <tr>
+                    <td>INSERT INTO</td>
+                    <td>Masukkan data</td>
+                    <td>INSERT INTO ... VALUES (...);</td>
+                </tr>
+                <tr>
+                    <td>SELECT</td>
+                    <td>Tampilkan data</td>
+                    <td>SELECT * FROM ...;</td>
+                </tr>
+                <tr>
+                    <td>UPDATE</td>
+                    <td>Ubah data</td>
+                    <td>UPDATE ... SET ... WHERE ...;</td>
+                </tr>
+                <tr>
+                    <td>DELETE</td>
+                    <td>Hapus data</td>
+                    <td>DELETE FROM ... WHERE ...;</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="penting">
+            💪 Semangat mengerjakan ya Elen! Kalau bingung, tanya temanmu! Pastikan screenshot setiap langkah! 📸
+        </div>
+
+    </div>
+
+    <script>
+        function copyText(id) {
+            var text = document.getElementById(id).innerText;
+            
+            // Buat textarea sementara untuk copy
+            var textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand("copy");
+                alert("✅ Sudah tersalin ya Elen! Paste ke Word/phpMyAdmin sekarang!");
+            } catch (err) {
+                alert("❌ Gagal menyalin. Coba salin manual ya Elen!");
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
