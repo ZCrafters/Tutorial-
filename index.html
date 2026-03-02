@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tugas SQL Elen - Perpustakaan</title>
+    <title>Panduan Lengkap SQL Elen - Dengan Screenshot</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -27,6 +27,7 @@
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 10px;
+            font-size: 28px;
         }
         .subtitle {
             text-align: center;
@@ -34,61 +35,90 @@
             margin-bottom: 30px;
             font-style: italic;
         }
-        .soal-box {
+        
+        /* Screenshot Box */
+        .screenshot-box {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            border: 3px solid #00b894;
+        }
+        .screenshot-box::before {
+            content: "📸 SCREENSHOT HASIL:";
+            display: block;
+            color: #55efc4;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 14px;
+            background: #00b894;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        /* Command Prompt Style */
+        .cmd-box {
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 5px solid #0f0;
+        }
+        .cmd-box::before {
+            content: "💻 COMMAND PROMPT:";
+            display: block;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .mysql-prompt {
+            color: #0ff;
+        }
+        .sql-command {
+            color: #ff0;
+        }
+        .result {
+            color: #0f0;
+        }
+        .error {
+            color: #f00;
+        }
+        
+        /* Step Box */
+        .step-box {
             background: #fff5f8;
             border-left: 5px solid #e84393;
             padding: 20px;
-            margin: 20px 0;
+            margin: 25px 0;
             border-radius: 10px;
         }
-        .nomor-soal {
-            display: inline-block;
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
             background: #e84393;
             color: white;
-            width: 35px;
-            height: 35px;
-            text-align: center;
-            line-height: 35px;
             border-radius: 50%;
             font-weight: bold;
             margin-right: 10px;
+            font-size: 18px;
         }
-        .perintah {
+        .step-title {
+            font-size: 20px;
             color: #d63031;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .sql-code {
-            background: #2d3436;
-            color: #55efc4;
-            padding: 15px;
-            border-radius: 10px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            position: relative;
-            overflow-x: auto;
-        }
-        .sql-code::before {
-            content: "📝 JAWABAN SQL:";
-            display: block;
-            color: #fdcb6e;
-            margin-bottom: 10px;
             font-weight: bold;
+            margin-bottom: 15px;
         }
-        .penjelasan {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 2px dashed #4caf50;
-        }
-        .penjelasan::before {
-            content: "💝 Elen, perhatikan ya:";
-            display: block;
-            color: #2e7d32;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+        
+        /* Tips */
         .tips-elen {
             background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
             padding: 20px;
@@ -100,6 +130,8 @@
             color: #d63031;
             margin-top: 0;
         }
+        
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -119,6 +151,8 @@
         tr:nth-child(even) {
             background: #f8f9fa;
         }
+        
+        /* Copy Button */
         .copy-btn {
             background: #00b894;
             color: white;
@@ -134,7 +168,9 @@
             background: #00cec9;
             transform: scale(1.05);
         }
-        .penting {
+        
+        /* Warning */
+        .warning {
             background: #ff7675;
             color: white;
             padding: 15px;
@@ -143,356 +179,333 @@
             margin: 20px 0;
             font-weight: bold;
         }
-        .rumus-dasar {
-            background: #74b9ff;
+        
+        /* Success */
+        .success {
+            background: #00b894;
             color: white;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
             margin: 20px 0;
-            font-size: 18px;
         }
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            background: #e84393;
+        
+        /* Navigation */
+        .nav-box {
+            background: #74b9ff;
             color: white;
-            border-radius: 50%;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .nav-box a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
             font-weight: bold;
-            margin-right: 10px;
+        }
+        
+        /* Highlight */
+        .highlight {
+            background: #ffeaa7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        /* Checklist */
+        .checklist {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .checklist li {
+            list-style: none;
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .checklist li::before {
+            content: "⬜";
+            position: absolute;
+            left: 0;
+            font-size: 20px;
         }
     </style>
 <base target="_blank">
 </head>
 <body>
     <div class="container">
-        <h1>🌸 Tugas SQL Elen - Database Perpustakaan 🌸</h1>
-        <p class="subtitle">Universitas Siber Indonesia | Basis Data | Dosen: Dicky Hariyanto, M.Kom</p>
+        <h1>📸 PANDUAN SQL LENGKAP DENGAN SCREENSHOT<br>UNTUK ELEN</h1>
+        <p class="subtitle">Universitas Siber Indonesia | Ujian HER | Basis Data</p>
         
-        <div class="penting">
-            ⚠️ Elen, ini tugas Ujian HER ya! Kerjakan dengan teliti! Semangat! 💪
+        <div class="warning">
+            ⚠️ Elen, ikuti langkah ini satu per satu ya! Jangan loncat-loncat! 💪
         </div>
 
-        <div class="rumus-dasar">
-            <strong>Rumus Dasar SQL yang Wajib Elen Hafal:</strong><br>
-            <span style="font-size: 24px;">CREATE → INSERT → SELECT → UPDATE → DELETE</span>
-        </div>
+        <!-- PERSIAPAN -->
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">0</span>
+                PERSIAPAN SEBELUM MULAI
+            </div>
+            
+            <div class="tips-elen">
+                <h3>📝 Yang Harus Elen Siapkan:</h3>
+                <ol>
+                    <li>Buka <strong>XAMPP Control Panel</strong></li>
+                    <li>Klik <strong>Start</strong> pada Apache dan MySQL</li>
+                    <li>Buka browser (Chrome/Firefox)</li>
+                    <li>Ketik di address bar: <strong>localhost/phpmyadmin</strong></li>
+                </ol>
+            </div>
 
-        <div class="tips-elen">
-            <h3>📋 Petunjuk Pengerjaan untuk Elen:</h3>
-            <ol>
-                <li>Buka XAMPP → Start Apache & MySQL</li>
-                <li>Buka browser → ketik <strong>localhost/phpmyadmin</strong></li>
-                <li>Klik menu <strong>"SQL"</strong> untuk mengetik perintah</li>
-                <li>Atau buka <strong>Command Prompt (CMD)</strong> → ketik: <code>mysql -u root</code></li>
-                <li>Setelah selesai, screenshot hasilnya!</li>
-            </ol>
+            <div class="screenshot-box">
+                <div style="color: #aaa; text-align: center; padding: 20px;">
+                    [Gambar: Tampilan XAMPP Control Panel dengan Apache & MySQL running]
+                </div>
+                <div style="color: #0f0; text-align: center;">
+                    Apache ✅ Running<br>
+                    MySQL ✅ Running
+                </div>
+            </div>
         </div>
 
         <!-- SOAL 1 -->
-        <div class="soal-box">
-            <span class="nomor-soal">1</span>
-            <span class="perintah">Buat Database dengan nama Perpustakaan</span>
-            
-            <div class="sql-code" id="sql1">
-CREATE DATABASE Perpustakaan;
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Buat Database "Perpustakaan"
             </div>
-            <button class="copy-btn" onclick="copyText('sql1')">📋 Copy SQL</button>
             
-            <div class="penjelasan">
-                Elen, perintah <strong>CREATE DATABASE</strong> digunakan untuk membuat database baru. 
-                Nama databasenya adalah <strong>Perpustakaan</strong>. Jangan lupa titik koma (;) di akhir ya!
+            <p><strong>Perintah SQL:</strong></p>
+            <div class="cmd-box" id="sql1">
+<span class="mysql-prompt">MariaDB [(none)]></span> <span class="sql-command">CREATE DATABASE Perpustakaan;</span>
+            </div>
+            <button class="copy-btn" onclick="copyText('sql1')">📋 Copy Perintah</button>
+
+            <div class="screenshot-box">
+<span class="result">Query OK, 1 row affected (0.001 sec)</span>
+            </div>
+
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - <span class="highlight">CREATE DATABASE</span> = perintah buat database baru<br>
+                - <span class="highlight">Perpustakaan</span> = nama database (bebas, tapi ikuti soal ya)<br>
+                - Kalau muncul "Query OK" berarti SUKSES! ✅
             </div>
         </div>
 
         <!-- SOAL 2 -->
-        <div class="soal-box">
-            <span class="nomor-soal">2</span>
-            <span class="perintah">Aktifkan Database Perpustakaan</span>
-            
-            <div class="sql-code" id="sql2">
-USE Perpustakaan;
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Aktifkan Database
             </div>
-            <button class="copy-btn" onclick="copyText('sql2')">📋 Copy SQL</button>
             
-            <div class="penjelasan">
-                Elen, perintah <strong>USE</strong> digunakan untuk memilih database yang akan digunakan. 
-                Ini seperti Elen masuk ke ruangan Perpustakaan, supaya bisa kerja di sana.
+            <p><strong>Perintah SQL:</strong></p>
+            <div class="cmd-box" id="sql2">
+<span class="mysql-prompt">MariaDB [(none)]></span> <span class="sql-command">USE Perpustakaan;</span>
+            </div>
+            <button class="copy-btn" onclick="copyText('sql2')">📋 Copy Perintah</button>
+
+            <div class="screenshot-box">
+<span class="result">Database changed</span><br><br>
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span style="color: #888;">← Nanti promptnya berubah jadi ini</span>
+            </div>
+
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - <span class="highlight">USE</span> = pilih database yang mau dipakai<br>
+                - Perhatikan prompt berubah dari [(none)] jadi [Perpustakaan]<br>
+                - Ini tandanya Elen sudah masuk ke database Perpustakaan
             </div>
         </div>
 
         <!-- SOAL 3 -->
-        <div class="soal-box">
-            <span class="nomor-soal">3</span>
-            <span class="perintah">Buat table Anggota (id_anggota, nama, alamat, nomor_telpon)</span>
-            
-            <div class="sql-code" id="sql3">
-CREATE TABLE Anggota (
-    id_anggota INT PRIMARY KEY,
-    nama VARCHAR(50),
-    alamat VARCHAR(100),
-    nomor_telpon VARCHAR(15)
-);
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Buat Tabel Anggota
             </div>
-            <button class="copy-btn" onclick="copyText('sql3')">📋 Copy SQL</button>
             
-            <div class="penjelasan">
-                Elen, perintah <strong>CREATE TABLE</strong> untuk membuat tabel baru. 
-                <strong>INT</strong> = angka bulat, <strong>VARCHAR</strong> = teks. 
-                <strong>PRIMARY KEY</strong> = kunci utama (unik, tidak boleh sama).
+            <p><strong>Perintah SQL:</strong></p>
+            <div class="cmd-box" id="sql3">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">CREATE TABLE Anggota (</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">id_anggota INT PRIMARY KEY,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">nama VARCHAR(50),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">alamat VARCHAR(100),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">nomor_telpon VARCHAR(15)</span><br>
+<span class="sql-command">);</span>
+            </div>
+            <button class="copy-btn" onclick="copyText('sql3')">📋 Copy Perintah</button>
+
+            <div class="screenshot-box">
+<span class="result">Query OK, 0 rows affected (0.023 sec)</span>
+            </div>
+
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - <span class="highlight">CREATE TABLE</span> = buat tabel baru<br>
+                - <span class="highlight">INT</span> = tipe data angka<br>
+                - <span class="highlight">VARCHAR(50)</span> = teks maksimal 50 huruf<br>
+                - <span class="highlight">PRIMARY KEY</span> = kunci utama (unik, tidak boleh sama)<br>
+                - Jangan lupa tutup kurung dan titik koma di akhir!
+            </div>
+
+            <p><strong>Cek hasilnya:</strong></p>
+            <div class="cmd-box">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">DESC Anggota;</span>
+            </div>
+
+            <div class="screenshot-box">
++----------------+-------------+------+-----+---------+-------+<br>
+| Field          | Type        | Null | Key | Default | Extra |<br>
++----------------+-------------+------+-----+---------+-------+<br>
+| id_anggota     | int(11)     | NO   | PRI | NULL    |       |<br>
+| nama           | varchar(50) | YES  |     | NULL    |       |<br>
+| alamat         | varchar(100)| YES  |     | NULL    |       |<br>
+| nomor_telpon   | varchar(15) | YES  |     | NULL    |       |<br>
++----------------+-------------+------+-----+---------+-------+<br>
+<span class="result">4 rows in set (0.001 sec)</span>
             </div>
         </div>
 
         <!-- SOAL 4 -->
-        <div class="soal-box">
-            <span class="nomor-soal">4</span>
-            <span class="perintah">Buat table Buku (kode_buku, judul, pengarang, stok)</span>
-            
-            <div class="sql-code" id="sql4">
-CREATE TABLE Buku (
-    kode_buku INT PRIMARY KEY,
-    judul VARCHAR(100),
-    pengarang VARCHAR(50),
-    stok INT
-);
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">4</span>
+                Buat Tabel Buku
             </div>
-            <button class="copy-btn" onclick="copyText('sql4')">📋 Copy SQL</button>
             
-            <div class="penjelasan">
-                Elen, sama seperti soal 3, tapi nama tabelnya <strong>Buku</strong> dan kolomnya berbeda. 
-                <strong>stok</strong> pakai INT karena angka (banyaknya buku).
+            <p><strong>Perintah SQL:</strong></p>
+            <div class="cmd-box" id="sql4">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">CREATE TABLE Buku (</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">kode_buku INT PRIMARY KEY,</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">judul VARCHAR(100),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">pengarang VARCHAR(50),</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">stok INT</span><br>
+<span class="sql-command">);</span>
+            </div>
+            <button class="copy-btn" onclick="copyText('sql4')">📋 Copy Perintah</button>
+
+            <div class="screenshot-box">
+<span class="result">Query OK, 0 rows affected (0.019 sec)</span>
+            </div>
+
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - Sama seperti tabel Anggota, tapi nama kolomnya berbeda<br>
+                - <span class="highlight">stok INT</span> = jumlah buku (angka)
             </div>
         </div>
 
         <!-- SOAL 5 -->
-        <div class="soal-box">
-            <span class="nomor-soal">5</span>
-            <span class="perintah">Tambahkan kolom/field email pada table Anggota</span>
-            
-            <div class="sql-code" id="sql5">
-ALTER TABLE Anggota 
-ADD COLUMN email VARCHAR(50);
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">5</span>
+                Tambah Kolom Email di Tabel Anggota
             </div>
-            <button class="copy-btn" onclick="copyText('sql5')">📋 Copy SQL</button>
             
-            <div class="penjelasan">
-                Elen, perintah <strong>ALTER TABLE</strong> untuk mengubah struktur tabel yang sudah ada. 
-                <strong>ADD COLUMN</strong> = menambah kolom baru. Di sini nambah kolom email.
+            <p><strong>Perintah SQL:</strong></p>
+            <div class="cmd-box" id="sql5">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">ALTER TABLE Anggota ADD email VARCHAR(50);</span>
+            </div>
+            <button class="copy-btn" onclick="copyText('sql5')">📋 Copy Perintah</button>
+
+            <div class="screenshot-box">
+<span class="result">Query OK, 0 rows affected (0.012 sec)</span><br>
+Records: 0  Duplicates: 0  Warnings: 0
+            </div>
+
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - <span class="highlight">ALTER TABLE</span> = mengubah tabel yang sudah ada<br>
+                - <span class="highlight">ADD</span> = menambah kolom baru<br>
+                - Kolom email ditambahkan di tabel Anggota
+            </div>
+
+            <p><strong>Cek hasilnya:</strong></p>
+            <div class="screenshot-box">
++----------------+-------------+------+-----+---------+-------+<br>
+| Field          | Type        | Null | Key | Default | Extra |<br>
++----------------+-------------+------+-----+---------+-------+<br>
+| id_anggota     | int(11)     | NO   | PRI | NULL    |       |<br>
+| nama           | varchar(50) | YES  |     | NULL    |       |<br>
+| alamat         | varchar(100)| YES  |     | NULL    |       |<br>
+| nomor_telpon   | varchar(15) | YES  |     | NULL    |       |<br>
+| <span style="color: #0f0;">email          | varchar(50) | YES  |     | NULL    |       |</span><br>
++----------------+-------------+------+-----+---------+-------+<br>
+<span class="result">5 rows in set (0.001 sec)</span>
             </div>
         </div>
 
         <!-- SOAL 6 -->
-        <div class="soal-box">
-            <span class="nomor-soal">6</span>
-            <span class="perintah">Isi 3 data pada table Anggota & 3 data pada table Buku</span>
+        <div class="step-box">
+            <div class="step-title">
+                <span class="step-number">6</span>
+                Isi Data Anggota & Buku (3 Data Masing-masing)
+            </div>
             
-            <p><strong>Data untuk Tabel Anggota:</strong></p>
-            <div class="sql-code" id="sql6a">
--- Data 1: Munfi
-INSERT INTO Anggota VALUES (101, 'Munfi', 'Jl. Juanda', '08592839328', 'munfi@gmail.com');
-
--- Data 2: Jupi
-INSERT INTO Anggota VALUES (102, 'Jupi', 'Jl. Wr. Supratman', '08112783738', 'jupi@gmail.com');
-
--- Data 3: Elen (Kamu!)
-INSERT INTO Anggota VALUES (103, 'Elen', 'Jl. Poltangan', '0813048393', 'elen@gmail.com');
+            <p><strong>Data Anggota:</strong></p>
+            <div class="cmd-box" id="sql6a">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">INSERT INTO Anggota VALUES</span><br>
+<span class="sql-command">(101, 'Munfi', 'Jl. Juanda', '08592839328', 'munfi@gmail.com'),</span><br>
+<span class="sql-command">(102, 'Jupi', 'Jl. Wr. Supratman', '08112783738', 'jupi@gmail.com'),</span><br>
+<span class="sql-command">(103, 'Elen', 'Jl. Poltangan', '0813048393', 'elen@gmail.com');</span>
             </div>
             <button class="copy-btn" onclick="copyText('sql6a')">📋 Copy SQL Anggota</button>
 
-            <p style="margin-top: 20px;"><strong>Data untuk Tabel Buku:</strong></p>
-            <div class="sql-code" id="sql6b">
--- Data 1
-INSERT INTO Buku VALUES (111, 'Basis Data Untuk Pemula', 'Ade Supriatna', 4);
+            <div class="screenshot-box">
+<span class="result">Query OK, 3 rows affected (0.005 sec)</span><br>
+Records: 3  Duplicates: 0  Warnings: 0
+            </div>
 
--- Data 2
-INSERT INTO Buku VALUES (222, 'Ekonomi Syariah', 'Bintang Gemilang', 7);
-
--- Data 3
-INSERT INTO Buku VALUES (333, 'Desain Grafis', 'Sudiyono', 9);
+            <p><strong>Data Buku:</strong></p>
+            <div class="cmd-box" id="sql6b">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">INSERT INTO Buku VALUES</span><br>
+<span class="sql-command">(111, 'Basis Data Untuk Pemula', 'Ade Supriatna', 4),</span><br>
+<span class="sql-command">(222, 'Ekonomi Syariah', 'Bintang Gemilang', 7),</span><br>
+<span class="sql-command">(333, 'Desain Grafis', 'Sudiyono', 9);</span>
             </div>
             <button class="copy-btn" onclick="copyText('sql6b')">📋 Copy SQL Buku</button>
-            
-            <div class="penjelasan">
-                Elen, perintah <strong>INSERT INTO</strong> untuk memasukkan data. 
-                <strong>VALUES</strong> diikuti oleh data sesuai urutan kolom. 
-                Teks pakai tanda petik ('), angka tidak perlu petik.
+
+            <div class="screenshot-box">
+<span class="result">Query OK, 3 rows affected (0.004 sec)</span><br>
+Records: 3  Duplicates: 0  Warnings: 0
             </div>
 
-            <p><strong>Hasil yang akan muncul:</strong></p>
-            <table>
-                <tr><th>id_anggota</th><th>nama</th><th>alamat</th><th>nomor_telpon</th><th>email</th></tr>
-                <tr><td>101</td><td>Munfi</td><td>Jl. Juanda</td><td>08592839328</td><td>munfi@gmail.com</td></tr>
-                <tr><td>102</td><td>Jupi</td><td>Jl. Wr. Supratman</td><td>08112783738</td><td>jupi@gmail.com</td></tr>
-                <tr><td>103</td><td>Elen</td><td>Jl. Poltangan</td><td>0813048393</td><td>elen@gmail.com</td></tr>
-            </table>
-        </div>
+            <div class="tips-elen">
+                <strong>💝 Penjelasan buat Elen:</strong><br>
+                - <span class="highlight">INSERT INTO</span> = masukkan data<br>
+                - <span class="highlight">VALUES</span> = nilai yang dimasukkan<br>
+                - Urutannya harus sesuai dengan urutan kolom ya!<br>
+                - Teks pakai tanda petik ('), angka tidak perlu petik
+            </div>
 
-        <!-- SOAL 7 -->
-        <div class="soal-box">
-            <span class="nomor-soal">7</span>
-            <span class="perintah">Ubah nomor telpon Elen menjadi 0811111111</span>
-            
-            <div class="sql-code" id="sql7">
-UPDATE Anggota 
-SET nomor_telpon = '0811111111' 
-WHERE nama = 'Elen';
+            <p><strong>Cek data Anggota:</strong></p>
+            <div class="cmd-box">
+<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">SELECT * FROM Anggota;</span>
             </div>
-            <button class="copy-btn" onclick="copyText('sql7')">📋 Copy SQL</button>
-            
-            <div class="penjelasan">
-                Elen, perintah <strong>UPDATE</strong> untuk mengubah data. 
-                <strong>SET</strong> = nilai yang baru, <strong>WHERE</strong> = kondisi (yang mana yang diubah). 
-                Hati-hati! Kalau lupa WHERE, semua data akan berubah!
-            </div>
-        </div>
 
-        <!-- SOAL 8 -->
-        <div class="soal-box">
-            <span class="nomor-soal">8</span>
-            <span class="perintah">Ubah nama pengarang Ekonomi Syariah menjadi Bintang Purnama</span>
-            
-            <div class="sql-code" id="sql8">
-UPDATE Buku 
-SET pengarang = 'Bintang Purnama' 
-WHERE judul = 'Ekonomi Syariah';
+            <div class="screenshot-box">
++------------+-------+-------------------+---------------+------------------+<br>
+| id_anggota | nama  | alamat            | nomor_telpon  | email            |<br>
++------------+-------+-------------------+---------------+------------------+<br>
+| <span style="color: #0f0;">101</span>        | <span style="color: #0f0;">Munfi</span> | <span style="color: #0f0;">Jl. Juanda</span>        | <span style="color: #0f0;">08592839328</span>   | <span style="color: #0f0;">munfi@gmail.com</span>  |<br>
+| <span style="color: #0f0;">102</span>        | <span style="color: #0f0;">Jupi</span>  | <span style="color: #0f0;">Jl. Wr. Supratman</span> | <span style="color: #0f0;">08112783738</span>   | <span style="color: #0f0;">jupi@gmail.com</span>   |<br>
+| <span style="color: #0f0;">103</span>        | <span style="color: #0f0;">Elen</span>  | <span style="color: #0f0;">Jl. Poltangan</span>     | <span style="color: #0f0;">0813048393</span>    | <span style="color: #0f0;">elen@gmail.com</span>   |<br>
++------------+-------+-------------------+---------------+------------------+<br>
+<span class="result">3 rows in set (0.000 sec)</span>
             </div>
-            <button class="copy-btn" onclick="copyText('sql8')">📋 Copy SQL</button>
-            
-            <div class="penjelasan">
-                Elen, sama seperti soal 7, tapi tabelnya <strong>Buku</strong>. 
-                Kita cari buku yang judulnya 'Ekonomi Syariah', lalu ganti pengarangnya.
-            </div>
-        </div>
 
-        <!-- SOAL 9 -->
-        <div class="soal-box">
-            <span class="nomor-soal">9</span>
-            <span class="perintah">Tampilkan judul dan pengarang dengan stok terbanyak</span>
-            
-            <div class="sql-code" id="sql9">
-SELECT judul, pengarang 
-FROM Buku 
-WHERE stok = (SELECT MAX(stok) FROM Buku);
-            </div>
-            <button class="copy-btn" onclick="copyText('sql9')">📋 Copy SQL</button>
-            
-            <div class="penjelasan">
-                Elen, ini sedikit rumit. Kita pakai <strong>SELECT</strong> di dalam SELECT (subquery). 
-                <strong>MAX(stok)</strong> = cari nilai stok paling besar. 
-                Hasilnya: <strong>Desain Grafis</strong> karena stoknya 9 (paling banyak).
-            </div>
-            
-            <p><strong>Atau cara lebih simpel (kalau hanya 1 yang terbanyak):</strong></p>
-            <div class="sql-code" id="sql9b">
-SELECT judul, pengarang, stok 
-FROM Buku 
-ORDER BY stok DESC 
-LIMIT 1;
-            </div>
-            <button class="copy-btn" onclick="copyText('sql9b')">📋 Copy SQL Alternatif</button>
-            
-            <div class="penjelasan">
-                Cara ini: urutkan dari stok terbesar (DESC), lalu ambil 1 saja (LIMIT 1). Lebih mudah dipahami ya Elen!
-            </div>
-        </div>
-
-        <!-- SOAL 10 -->
-        <div class="soal-box">
-            <span class="nomor-soal">10</span>
-            <span class="perintah">Hapus buku dengan judul Desain Grafis</span>
-            
-            <div class="sql-code" id="sql10">
-DELETE FROM Buku 
-WHERE judul = 'Desain Grafis';
-            </div>
-            <button class="copy-btn" onclick="copyText('sql10')">📋 Copy SQL</button>
-            
-            <div class="penjelasan">
-                Elen, perintah <strong>DELETE FROM</strong> untuk menghapus data. 
-                Jangan lupa <strong>WHERE</strong> ya! Kalau lupa WHERE, semua data di tabel akan terhapus!
-            </div>
-        </div>
-
-        <!-- RINGKASAN -->
-        <div class="tips-elen">
-            <h3>📝 Ringkasan Perintah SQL untuk Elen:</h3>
-            <table>
-                <tr>
-                    <th>Perintah</th>
-                    <th>Fungsi</th>
-                    <th>Contoh</th>
-                </tr>
-                <tr>
-                    <td>CREATE DATABASE</td>
-                    <td>Buat database baru</td>
-                    <td>CREATE DATABASE Perpustakaan;</td>
-                </tr>
-                <tr>
-                    <td>USE</td>
-                    <td>Pilih database</td>
-                    <td>USE Perpustakaan;</td>
-                </tr>
-                <tr>
-                    <td>CREATE TABLE</td>
-                    <td>Buat tabel baru</td>
-                    <td>CREATE TABLE Anggota (...);</td>
-                </tr>
-                <tr>
-                    <td>ALTER TABLE</td>
-                    <td>Ubah struktur tabel</td>
-                    <td>ALTER TABLE ... ADD COLUMN ...;</td>
-                </tr>
-                <tr>
-                    <td>INSERT INTO</td>
-                    <td>Masukkan data</td>
-                    <td>INSERT INTO ... VALUES (...);</td>
-                </tr>
-                <tr>
-                    <td>SELECT</td>
-                    <td>Tampilkan data</td>
-                    <td>SELECT * FROM ...;</td>
-                </tr>
-                <tr>
-                    <td>UPDATE</td>
-                    <td>Ubah data</td>
-                    <td>UPDATE ... SET ... WHERE ...;</td>
-                </tr>
-                <tr>
-                    <td>DELETE</td>
-                    <td>Hapus data</td>
-                    <td>DELETE FROM ... WHERE ...;</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="penting">
-            💪 Semangat mengerjakan ya Elen! Kalau bingung, tanya temanmu! Pastikan screenshot setiap langkah! 📸
-        </div>
-
-    </div>
-
-    <script>
-        function copyText(id) {
-            var text = document.getElementById(id).innerText;
-            
-            // Buat textarea sementara untuk copy
-            var textarea = document.createElement("textarea");
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                document.execCommand("copy");
-                alert("✅ Sudah tersalin ya Elen! Paste ke Word/phpMyAdmin sekarang!");
-            } catch (err) {
-                alert("❌ Gagal menyalin. Coba salin manual ya Elen!");
-            }
-            
-            document.body.removeChild(textarea);
-        }
-    </script>
-</body>
-</html>
+            <p><strong>Cek data Buku:</strong></p>
+            <div class="screenshot-box">
++-----------+-------------------------+------------------+------+<br>
+| kode_buku | judul                   | pengarang        | stok |<br>
++-----------+-------------------------+------------------+------+<br>
+| <span style="color: #0f0;">111</span>       | <span style="color: #0f0;">Basis Data Untuk Pemula</span> | <span style="color: #0f0;">Ade Supriatna</span>    | <span style="color: #0f0;">4</span>    |<br>
+| <span style="color: #0f0;">222</span>       | <span style="color: #0f0;">Ekonomi Syariah</span>         | <span style="color: #0f0;">Bintang Gemilang</span> | <span style="color: #0f0;">7</span>    |<br>
+| <span style="color: #0f0;">333</span>       | <span style="color: #0f0;">Desain Grafis</span>           | <span style="color: #0f0;">Sudiyono</spa
