@@ -1,511 +1,1448 @@
+html_content = '''
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panduan Lengkap SQL Elen - Dengan Screenshot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FINATRA FIELD PLAYBOOK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            max-width: 900px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 480px;
             margin: 0 auto;
             padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Splash Screen */
+        .splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
         }
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+
+        .splash.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
-        h1 {
-            color: #e84393;
-            text-align: center;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 10px;
+
+        .splash-logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        .splash h1 {
+            color: white;
             font-size: 28px;
-        }
-        .subtitle {
+            font-weight: 800;
             text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-        
-        /* Screenshot Box */
-        .screenshot-box {
-            background: #2d3436;
-            color: #dfe6e9;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            position: relative;
-            border: 3px solid #00b894;
-        }
-        .screenshot-box::before {
-            content: "📸 SCREENSHOT HASIL:";
-            display: block;
-            color: #55efc4;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 14px;
-            background: #00b894;
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-        }
-        
-        /* Command Prompt Style */
-        .cmd-box {
-            background: #000;
-            color: #0f0;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            border-left: 5px solid #0f0;
-        }
-        .cmd-box::before {
-            content: "💻 COMMAND PROMPT:";
-            display: block;
-            color: #fff;
             margin-bottom: 10px;
-            font-weight: bold;
         }
-        .mysql-prompt {
-            color: #0ff;
+
+        .splash p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            text-align: center;
         }
-        .sql-command {
-            color: #ff0;
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
-        .result {
-            color: #0f0;
-        }
-        .error {
-            color: #f00;
-        }
-        
-        /* Step Box */
-        .step-box {
-            background: #fff5f8;
-            border-left: 5px solid #e84393;
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 20px;
-            margin: 25px 0;
-            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
-        .step-number {
-            display: inline-flex;
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: #e84393;
             color: white;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-right: 10px;
-            font-size: 18px;
+            font-size: 24px;
+            font-weight: 700;
         }
-        .step-title {
-            font-size: 20px;
-            color: #d63031;
-            font-weight: bold;
+
+        .user-details h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .user-details p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .stat-chip {
+            background: #f3f4f6;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-chip.fire {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .stat-chip.diamond {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Mode Selection */
+        .mode-selection {
+            display: none;
+        }
+
+        .mode-selection.active {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .greeting {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sub-greeting {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .mode-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card:hover,
+        .mode-card:active {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-card.b2b {
+            border-left: 5px solid #ef4444;
+        }
+
+        .mode-card.b2c {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .mode-card.confused {
+            border-left: 5px solid #10b981;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .mode-icon {
+            font-size: 40px;
             margin-bottom: 15px;
         }
-        
-        /* Tips */
-        .tips-elen {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 3px solid #e17055;
+
+        .mode-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #1a202c;
         }
-        .tips-elen h3 {
-            color: #d63031;
-            margin-top: 0;
+
+        .mode-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 15px;
         }
-        
-        /* Table */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
+
+        .mode-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mode-tag {
+            background: #f3f4f6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .mode-card.b2b .mode-tag {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .mode-card.b2c .mode-tag {
+            background: #eff6ff;
+            color: #1e40af;
+        }
+
+        /* Assessment Flow */
+        .assessment {
+            display: none;
             background: white;
-            font-size: 14px;
+            border-radius: 24px;
+            padding: 25px;
+            min-height: 70vh;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
+
+        .assessment.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .question {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 20px;
             text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        th {
-            background: #e84393;
-            color: white;
+
+        .option-btn:hover,
+        .option-btn:active {
+            border-color: #667eea;
+            background: #f5f3ff;
+            transform: scale(1.02);
         }
-        tr:nth-child(even) {
-            background: #f8f9fa;
+
+        .option-icon {
+            font-size: 24px;
         }
-        
-        /* Copy Button */
-        .copy-btn {
-            background: #00b894;
-            color: white;
+
+        /* B2B Mission */
+        .b2b-mission {
+            display: none;
+        }
+
+        .b2b-mission.active {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
             border: none;
+            color: white;
             padding: 10px 20px;
             border-radius: 20px;
-            cursor: pointer;
             font-size: 14px;
-            margin-top: 10px;
-            transition: all 0.3s;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
         }
-        .copy-btn:hover {
-            background: #00cec9;
+
+        .section-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .territory-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .territory-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .territory-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .territory-branch {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .zone-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .zone-green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .zone-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .zone-red {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .territory-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .territory-stat {
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .territory-stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a202c;
+        }
+
+        .territory-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .strategy-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .strategy-text {
+            font-size: 13px;
+            color: #78350f;
+            line-height: 1.5;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .action-btn:hover,
+        .action-btn:active {
+            transform: translateY(-2px);
+        }
+
+        /* B2C Bridge */
+        .b2c-mission {
+            display: none;
+        }
+
+        .b2c-mission.active {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        .customer-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .customer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .customer-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .customer-score {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .customer-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .customer-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .referral-potential {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .referral-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 8px;
+        }
+
+        .referral-text {
+            font-size: 13px;
+            color: #15803d;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .script-box {
+            background: white;
+            border: 1px dashed #86efac;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 13px;
+            color: #166534;
+            font-style: italic;
+        }
+
+        /* Battle Mode */
+        .battle-mode {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a202c;
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .battle-mode.active {
+            display: block;
+        }
+
+        .battle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        .battle-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .close-battle {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .battle-target {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .battle-target h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .battle-target h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .battle-status {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-pill {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .battle-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .battle-action {
+            background: #2d3748;
+            border: 2px solid #4a5568;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .battle-action:hover,
+        .battle-action:active {
+            border-color: #667eea;
+            background: #3d4a5c;
             transform: scale(1.05);
         }
-        
-        /* Warning */
-        .warning {
-            background: #ff7675;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
+
+        .battle-action-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
         }
-        
-        /* Success */
-        .success {
-            background: #00b894;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px 0;
+
+        .battle-action-text {
+            font-size: 14px;
+            font-weight: 600;
         }
-        
-        /* Navigation */
-        .nav-box {
-            background: #74b9ff;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-        }
-        .nav-box a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-        
-        /* Highlight */
-        .highlight {
-            background: #ffeaa7;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        
-        /* Checklist */
-        .checklist {
-            background: #e8f5e9;
+
+        .battle-result {
+            background: #2d3748;
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            color: white;
         }
-        .checklist li {
-            list-style: none;
-            margin: 10px 0;
-            padding-left: 30px;
-            position: relative;
+
+        .result-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #10b981;
         }
-        .checklist li::before {
-            content: "⬜";
-            position: absolute;
+
+        .result-form textarea {
+            width: 100%;
+            background: #1a202c;
+            border: 1px solid #4a5568;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 15px;
+        }
+
+        .result-form button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-fail {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* Success Animation */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
             left: 0;
-            font-size: 20px;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .success-overlay.active {
+            display: flex;
+        }
+
+        .success-emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: celebrate 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+
+            50% {
+                transform: scale(1.2) rotate(180deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        .success-text {
+            color: white;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .success-sub {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Hidden utility */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
         }
     </style>
-<base target="_blank">
 </head>
+
 <body>
+    <!-- Splash Screen -->
+    <div class="splash" id="splash">
+        <div class="splash-logo">🚀</div>
+        <h1>FINATRA<br>FIELD PLAYBOOK</h1>
+        <p>Local Community Figure Activation</p>
+    </div>
+
     <div class="container">
-        <h1>📸 PANDUAN SQL LENGKAP DENGAN SCREENSHOT<br>UNTUK ELEN</h1>
-        <p class="subtitle">Universitas Siber Indonesia | Ujian HER | Basis Data</p>
-        
-        <div class="warning">
-            ⚠️ Elen, ikuti langkah ini satu per satu ya! Jangan loncat-loncat! 💪
-        </div>
-
-        <!-- PERSIAPAN -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">0</span>
-                PERSIAPAN SEBELUM MULAI
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="brand">FINATRA</div>
+                <div class="badge">🔥 Streak 3 Hari</div>
             </div>
-            
-            <div class="tips-elen">
-                <h3>📝 Yang Harus Elen Siapkan:</h3>
-                <ol>
-                    <li>Buka <strong>XAMPP Control Panel</strong></li>
-                    <li>Klik <strong>Start</strong> pada Apache dan MySQL</li>
-                    <li>Buka browser (Chrome/Firefox)</li>
-                    <li>Ketik di address bar: <strong>localhost/phpmyadmin</strong></li>
-                </ol>
-            </div>
-
-            <div class="screenshot-box">
-                <div style="color: #aaa; text-align: center; padding: 20px;">
-                    [Gambar: Tampilan XAMPP Control Panel dengan Apache & MySQL running]
+            <div class="user-info">
+                <div class="avatar">ZW</div>
+                <div class="user-details">
+                    <h3>Zefanya Williams</h3>
+                    <p>Partnership Account Officer</p>
                 </div>
-                <div style="color: #0f0; text-align: center;">
-                    Apache ✅ Running<br>
-                    MySQL ✅ Running
+            </div>
+            <div class="stats-bar">
+                <div class="stat-chip fire">
+                    <span>🔥</span>
+                    <span>5 RT/RW Deal</span>
+                </div>
+                <div class="stat-chip diamond">
+                    <span>💎</span>
+                    <span>12 Referral</span>
+                </div>
+                <div class="stat-chip">
+                    <span>⭐</span>
+                    <span>Level 3</span>
                 </div>
             </div>
         </div>
 
-        <!-- SOAL 1 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">1</span>
-                Buat Database "Perpustakaan"
-            </div>
-            
-            <p><strong>Perintah SQL:</strong></p>
-            <div class="cmd-box" id="sql1">
-<span class="mysql-prompt">MariaDB [(none)]></span> <span class="sql-command">CREATE DATABASE Perpustakaan;</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql1')">📋 Copy Perintah</button>
+        <!-- Mode Selection -->
+        <div class="mode-selection active" id="modeSelection">
+            <div class="greeting">Selamat Pagi! 👋</div>
+            <div class="sub-greeting">Pilih gaya kerjamu hari ini:</div>
 
-            <div class="screenshot-box">
-<span class="result">Query OK, 1 row affected (0.001 sec)</span>
-            </div>
+            <div class="mode-cards">
+                <div class="mode-card b2b" onclick="startB2B()">
+                    <div class="mode-icon">🔥</div>
+                    <div class="mode-title">SAYA MAU CHALLENGE</div>
+                    <div class="mode-desc">
+                        Langsung approach RT/RW dan tokoh masyarakat.
+                        Cocok untuk PAO yang berani dan punya jaringan luas.
+                    </div>
+                    <div class="mode-tags">
+                        <span class="mode-tag">🎯 High Reward</span>
+                        <span class="mode-tag">⚡ Fast Track</span>
+                        <span class="mode-tag">🏆 Community Hero</span>
+                    </div>
+                </div>
 
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - <span class="highlight">CREATE DATABASE</span> = perintah buat database baru<br>
-                - <span class="highlight">Perpustakaan</span> = nama database (bebas, tapi ikuti soal ya)<br>
-                - Kalau muncul "Query OK" berarti SUKSES! ✅
+                <div class="mode-card b2c" onclick="startB2C()">
+                    <div class="mode-icon">🌉</div>
+                    <div class="mode-title">SAYA MAU PELAN-PELAN</div>
+                    <div class="mode-desc">
+                        Mulai dari nasabah existing untuk referral.
+                        Cocok untuk PAO yang nyaman dengan pendekatan personal.
+                    </div>
+                    <div class="mode-tags">
+                        <span class="mode-tag">🤝 Low Risk</span>
+                        <span class="mode-tag">📈 Steady Growth</span>
+                        <span class="mode-tag">💎 Connector</span>
+                    </div>
+                </div>
+
+                <div class="mode-card confused" onclick="startAssessment()">
+                    <div class="mode-icon">❓</div>
+                    <div class="mode-title">BINGUNG, TES DULU</div>
+                    <div class="mode-desc">
+                        Jawab 3 pertanyaan singkat, kami tentukan strategi
+                        terbaik berdasarkan karaktermu.
+                    </div>
+                    <div class="mode-tags">
+                        <span class="mode-tag">🧠 Smart Match</span>
+                        <span class="mode-tag">⏱️ 3 Menit</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- SOAL 2 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">2</span>
-                Aktifkan Database
-            </div>
-            
-            <p><strong>Perintah SQL:</strong></p>
-            <div class="cmd-box" id="sql2">
-<span class="mysql-prompt">MariaDB [(none)]></span> <span class="sql-command">USE Perpustakaan;</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql2')">📋 Copy Perintah</button>
-
-            <div class="screenshot-box">
-<span class="result">Database changed</span><br><br>
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span style="color: #888;">← Nanti promptnya berubah jadi ini</span>
+        <!-- Assessment Flow -->
+        <div class="assessment" id="assessment">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 33%"></div>
             </div>
 
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - <span class="highlight">USE</span> = pilih database yang mau dipakai<br>
-                - Perhatikan prompt berubah dari [(none)] jadi [Perpustakaan]<br>
-                - Ini tandanya Elen sudah masuk ke database Perpustakaan
+            <div id="questionContainer">
+                <div class="question" id="questionText">
+                    Sudah pernah approach tokoh masyarakat (RT/RW/Ketua Komunitas)?
+                </div>
+                <div class="options" id="optionsContainer">
+                    <button class="option-btn" onclick="answerAssessment(1, 'yes')">
+                        <span class="option-icon">✅</span>
+                        <span>Sudah, sering dan nyaman</span>
+                    </button>
+                    <button class="option-btn" onclick="answerAssessment(1, 'no')">
+                        <span class="option-icon">❌</span>
+                        <span>Belum pernah / Jarang</span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- SOAL 3 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">3</span>
-                Buat Tabel Anggota
-            </div>
-            
-            <p><strong>Perintah SQL:</strong></p>
-            <div class="cmd-box" id="sql3">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">CREATE TABLE Anggota (</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">id_anggota INT PRIMARY KEY,</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">nama VARCHAR(50),</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">alamat VARCHAR(100),</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">nomor_telpon VARCHAR(15)</span><br>
-<span class="sql-command">);</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql3')">📋 Copy Perintah</button>
+        <!-- B2B Mission -->
+        <div class="b2b-mission" id="b2bMission">
+            <button class="back-btn" onclick="backToMenu()">← Kembali</button>
+            <div class="section-title">🔥 TERRITORY HUNTER</div>
 
-            <div class="screenshot-box">
-<span class="result">Query OK, 0 rows affected (0.023 sec)</span>
+            <div class="territory-card">
+                <div class="territory-header">
+                    <div>
+                        <div class="territory-name">Kel. SRIAMUR</div>
+                        <div class="territory-branch">Bekasi Branch</div>
+                    </div>
+                    <div class="zone-badge zone-green">🟢 GREEN ZONE</div>
+                </div>
+                <div class="territory-stats">
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">85%</div>
+                        <div class="territory-stat-label">Current Rate</div>
+                    </div>
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">22</div>
+                        <div class="territory-stat-label">Kontrak Aktif</div>
+                    </div>
+                </div>
+                <div class="strategy-box">
+                    <div class="strategy-title">💡 STRATEGI REKOMENDASI</div>
+                    <div class="strategy-text">
+                        <strong>Prioritas:</strong> RT 001-003 (belum ada agent)<br>
+                        <strong>Approach:</strong> Community gathering - warga bayar tepat waktu 85%<br>
+                        <strong>Script:</strong> "Pak RT, di kelurahan ini performa warga sangat bagus, kita mau
+                        expand..."<br>
+                        <strong>Bawa:</strong> Brosur agent, formulir registrasi, merchandise
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('SRIAMUR', 'RT 001', 'b2b')">🚀 MULAI MISSION</button>
             </div>
 
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - <span class="highlight">CREATE TABLE</span> = buat tabel baru<br>
-                - <span class="highlight">INT</span> = tipe data angka<br>
-                - <span class="highlight">VARCHAR(50)</span> = teks maksimal 50 huruf<br>
-                - <span class="highlight">PRIMARY KEY</span> = kunci utama (unik, tidak boleh sama)<br>
-                - Jangan lupa tutup kurung dan titik koma di akhir!
+            <div class="territory-card">
+                <div class="territory-header">
+                    <div>
+                        <div class="territory-name">Kel. SRIMAHI</div>
+                        <div class="territory-branch">Bekasi Branch</div>
+                    </div>
+                    <div class="zone-badge zone-green">🟢 GREEN ZONE</div>
+                </div>
+                <div class="territory-stats">
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">91%</div>
+                        <div class="territory-stat-label">Current Rate</div>
+                    </div>
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">19</div>
+                        <div class="territory-stat-label">Kontrak Aktif</div>
+                    </div>
+                </div>
+                <div class="strategy-box">
+                    <div class="strategy-title">💡 STRATEGI REKOMENDASI</div>
+                    <div class="strategy-text">
+                        <strong>Prioritas:</strong> RT 005-007 (potential tinggi)<br>
+                        <strong>Approach:</strong> Door-to-door dengan data performa<br>
+                        <strong>Script:</strong> "Pak RT, kami punya 19 nasabah teladan di sini, ingin jadi agent?"<br>
+                        <strong>Estimasi:</strong> 2 jam untuk approach + closing
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('SRIMAHI', 'RT 005', 'b2b')">🚀 MULAI MISSION</button>
             </div>
 
-            <p><strong>Cek hasilnya:</strong></p>
-            <div class="cmd-box">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">DESC Anggota;</span>
-            </div>
-
-            <div class="screenshot-box">
-+----------------+-------------+------+-----+---------+-------+<br>
-| Field          | Type        | Null | Key | Default | Extra |<br>
-+----------------+-------------+------+-----+---------+-------+<br>
-| id_anggota     | int(11)     | NO   | PRI | NULL    |       |<br>
-| nama           | varchar(50) | YES  |     | NULL    |       |<br>
-| alamat         | varchar(100)| YES  |     | NULL    |       |<br>
-| nomor_telpon   | varchar(15) | YES  |     | NULL    |       |<br>
-+----------------+-------------+------+-----+---------+-------+<br>
-<span class="result">4 rows in set (0.001 sec)</span>
+            <div class="territory-card">
+                <div class="territory-header">
+                    <div>
+                        <div class="territory-name">Kel. TAMBUN</div>
+                        <div class="territory-branch">Bekasi Branch</div>
+                    </div>
+                    <div class="zone-badge zone-yellow">🟡 YELLOW ZONE</div>
+                </div>
+                <div class="territory-stats">
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">68%</div>
+                        <div class="territory-stat-label">Current Rate</div>
+                    </div>
+                    <div class="territory-stat">
+                        <div class="territory-stat-value">14</div>
+                        <div class="territory-stat-label">Kontrak Aktif</div>
+                    </div>
+                </div>
+                <div class="strategy-box">
+                    <div class="strategy-title">⚠️ PERHATIAN KHUSUS</div>
+                    <div class="strategy-text">
+                        <strong>Status:</strong> Current rate menengah, butuh pendekatan hati-hati<br>
+                        <strong>Strategi:</strong> Fokus pada edukasi manfaat, bukan sales<br>
+                        <strong>Target:</strong> Cari 1 RT dengan C0 tinggi untuk pilot project<br>
+                        <strong>Jangan:</strong> Janji janji berlebihan soal komisi
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('TAMBUN', 'RT 002', 'b2b')">🚀 MULAI MISSION</button>
             </div>
         </div>
 
-        <!-- SOAL 4 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">4</span>
-                Buat Tabel Buku
-            </div>
-            
-            <p><strong>Perintah SQL:</strong></p>
-            <div class="cmd-box" id="sql4">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">CREATE TABLE Buku (</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">kode_buku INT PRIMARY KEY,</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">judul VARCHAR(100),</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">pengarang VARCHAR(50),</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="sql-command">stok INT</span><br>
-<span class="sql-command">);</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql4')">📋 Copy Perintah</button>
+        <!-- B2C Bridge -->
+        <div class="b2c-mission" id="b2cMission">
+            <button class="back-btn" onclick="backToMenu()">← Kembali</button>
+            <div class="section-title">🌉 SUPER CONNECTOR HUNT</div>
 
-            <div class="screenshot-box">
-<span class="result">Query OK, 0 rows affected (0.019 sec)</span>
+            <div class="customer-card">
+                <div class="customer-header">
+                    <div class="customer-name">Bu Siti Aminah</div>
+                    <div class="customer-score">⭐ 95 Score</div>
+                </div>
+                <div class="customer-meta">
+                    <div class="customer-meta-item">📍 Sriamur</div>
+                    <div class="customer-meta-item">📅 18 Bulan</div>
+                    <div class="customer-meta-item">💳 C0 Lancar</div>
+                    <div class="customer-meta-item">🏪 Warung Sembako</div>
+                </div>
+                <div class="referral-potential">
+                    <div class="referral-title">🎯 POTENSI REFERRAL TINGGI</div>
+                    <div class="referral-text">
+                        Nasabah teladan dengan usaha warung. Punya interaksi harian
+                        dengan 50+ warga. Cocok untuk jadi "bridge" ke RT setempat.
+                    </div>
+                    <div class="script-box">
+                        "Bu, selamat jadi nasabah teladan FIF! Btw, Bu punya tetangga
+                        yang butuh modal usaha? Kalau deal, Bu dapat voucher Rp100rb..."
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('SRIAMUR', 'Bu Siti Aminah', 'b2c')">📞 HUBUNGI
+                    SEKARANG</button>
             </div>
 
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - Sama seperti tabel Anggota, tapi nama kolomnya berbeda<br>
-                - <span class="highlight">stok INT</span> = jumlah buku (angka)
+            <div class="customer-card">
+                <div class="customer-header">
+                    <div class="customer-name">Pak Budi Santoso</div>
+                    <div class="customer-score">⭐ 88 Score</div>
+                </div>
+                <div class="customer-meta">
+                    <div class="customer-meta-item">📍 Srimahi</div>
+                    <div class="customer-meta-item">📅 12 Bulan</div>
+                    <div class="customer-meta-item">💳 C0 Lancar</div>
+                    <div class="customer-meta-item">🔧 Bengkel Motor</div>
+                </div>
+                <div class="referral-potential">
+                    <div class="referral-title">🎯 POTENSI REFERRAL MENENGAH</div>
+                    <div class="referral-text">
+                        Pemilik bengkel dengan jaringan mekanik dan pelanggan loyal.
+                        Aktif di komunitas motor. Bisa kenalkan ke Ketua RW.
+                    </div>
+                    <div class="script-box">
+                        "Pak, selamat ya usaha makin lancar. Pak kenal Ketua RW di sini?
+                        Saya mau propose kerjasama, kalau jadi Pak dapat komisi juga..."
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('SRIMAHI', 'Pak Budi Santoso', 'b2c')">📞 HUBUNGI
+                    SEKARANG</button>
+            </div>
+
+            <div class="customer-card">
+                <div class="customer-header">
+                    <div class="customer-name">Bu Rina Wulandari</div>
+                    <div class="customer-score">⭐ 92 Score</div>
+                </div>
+                <div class="customer-meta">
+                    <div class="customer-meta-item">📍 Tambun</div>
+                    <div class="customer-meta-item">📅 15 Bulan</div>
+                    <div class="customer-meta-item">💳 C1 Bayar Tepat</div>
+                    <div class="customer-meta-item">👗 Butik Pakaian</div>
+                </div>
+                <div class="referral-potential">
+                    <div class="referral-title">🎯 POTENSI REFERRAL TINGGI</div>
+                    <div class="referral-text">
+                        Aktif di arisan dan pengajian ibu-ibu. Punya grup WA 100+ orang.
+                        Perfect untuk spreading awareness.
+                    </div>
+                    <div class="script-box">
+                        "Bu, di grup arisan/ pengajian ada yang butuh pinjaman modal?
+                        Saya kasih special rate kalau dari referral Bu..."
+                    </div>
+                </div>
+                <button class="action-btn" onclick="startBattle('TAMBUN', 'Bu Rina Wulandari', 'b2c')">📞 HUBUNGI
+                    SEKARANG</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Battle Mode -->
+    <div class="battle-mode" id="battleMode">
+        <div class="battle-header">
+            <div class="battle-title">⚡ BATTLE MODE</div>
+            <button class="close-battle" onclick="closeBattle()">×</button>
+        </div>
+
+        <div class="battle-target">
+            <h3>TARGET SAAT INI</h3>
+            <h2 id="battleTargetName">RT 001 - SRIAMUR</h2>
+            <div class="battle-status">
+                <span class="status-pill" id="battleType">B2B CHALLENGER</span>
+                <span class="status-pill">⏱️ 14:30 WIB</span>
             </div>
         </div>
 
-        <!-- SOAL 5 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">5</span>
-                Tambah Kolom Email di Tabel Anggota
+        <div class="battle-actions">
+            <div class="battle-action" onclick="takePhoto()">
+                <div class="battle-action-icon">📸</div>
+                <div class="battle-action-text">Foto Bukti</div>
             </div>
-            
-            <p><strong>Perintah SQL:</strong></p>
-            <div class="cmd-box" id="sql5">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">ALTER TABLE Anggota ADD email VARCHAR(50);</span>
+            <div class="battle-action" onclick="showScript()">
+                <div class="battle-action-icon">📝</div>
+                <div class="battle-action-text">Lihat Script</div>
             </div>
-            <button class="copy-btn" onclick="copyText('sql5')">📋 Copy Perintah</button>
-
-            <div class="screenshot-box">
-<span class="result">Query OK, 0 rows affected (0.012 sec)</span><br>
-Records: 0  Duplicates: 0  Warnings: 0
+            <div class="battle-action" onclick="showTips()">
+                <div class="battle-action-icon">💡</div>
+                <div class="battle-action-text">Tips & Trick</div>
             </div>
-
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - <span class="highlight">ALTER TABLE</span> = mengubah tabel yang sudah ada<br>
-                - <span class="highlight">ADD</span> = menambah kolom baru<br>
-                - Kolom email ditambahkan di tabel Anggota
-            </div>
-
-            <p><strong>Cek hasilnya:</strong></p>
-            <div class="screenshot-box">
-+----------------+-------------+------+-----+---------+-------+<br>
-| Field          | Type        | Null | Key | Default | Extra |<br>
-+----------------+-------------+------+-----+---------+-------+<br>
-| id_anggota     | int(11)     | NO   | PRI | NULL    |       |<br>
-| nama           | varchar(50) | YES  |     | NULL    |       |<br>
-| alamat         | varchar(100)| YES  |     | NULL    |       |<br>
-| nomor_telpon   | varchar(15) | YES  |     | NULL    |       |<br>
-| <span style="color: #0f0;">email          | varchar(50) | YES  |     | NULL    |       |</span><br>
-+----------------+-------------+------+-----+---------+-------+<br>
-<span class="result">5 rows in set (0.001 sec)</span>
+            <div class="battle-action" onclick="contactSupport()">
+                <div class="battle-action-icon">🆘</div>
+                <div class="battle-action-text">Bantuan</div>
             </div>
         </div>
 
-        <!-- SOAL 6 -->
-        <div class="step-box">
-            <div class="step-title">
-                <span class="step-number">6</span>
-                Isi Data Anggota & Buku (3 Data Masing-masing)
+        <div class="battle-result">
+            <div class="result-title">📊 UPDATE HASIL</div>
+            <div class="result-form">
+                <textarea id="battleNotes" rows="4" placeholder="Catatan hasil pertemuan...
+Contoh: RT bersedia, minta proposal tertulis. Follow up besok."></textarea>
+                <button class="btn-success" onclick="submitSuccess()">✅ DEAL / BERHASIL</button>
+                <button class="btn-fail" onclick="submitFail()">❌ FOLLOW UP NANTI</button>
             </div>
-            
-            <p><strong>Data Anggota:</strong></p>
-            <div class="cmd-box" id="sql6a">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">INSERT INTO Anggota VALUES</span><br>
-<span class="sql-command">(101, 'Munfi', 'Jl. Juanda', '08592839328', 'munfi@gmail.com'),</span><br>
-<span class="sql-command">(102, 'Jupi', 'Jl. Wr. Supratman', '08112783738', 'jupi@gmail.com'),</span><br>
-<span class="sql-command">(103, 'Elen', 'Jl. Poltangan', '0813048393', 'elen@gmail.com');</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql6a')">📋 Copy SQL Anggota</button>
+        </div>
+    </div>
 
-            <div class="screenshot-box">
-<span class="result">Query OK, 3 rows affected (0.005 sec)</span><br>
-Records: 3  Duplicates: 0  Warnings: 0
-            </div>
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-emoji" id="successEmoji">🏆</div>
+        <div class="success-text" id="successText">MISSION COMPLETE!</div>
+        <div class="success-sub" id="successSub">+50 XP | +1 Streak | Badge Unlocked!</div>
+        <button class="success-btn" onclick="closeSuccess()">LANJUTKAN →</button>
+    </div>
 
-            <p><strong>Data Buku:</strong></p>
-            <div class="cmd-box" id="sql6b">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">INSERT INTO Buku VALUES</span><br>
-<span class="sql-command">(111, 'Basis Data Untuk Pemula', 'Ade Supriatna', 4),</span><br>
-<span class="sql-command">(222, 'Ekonomi Syariah', 'Bintang Gemilang', 7),</span><br>
-<span class="sql-command">(333, 'Desain Grafis', 'Sudiyono', 9);</span>
-            </div>
-            <button class="copy-btn" onclick="copyText('sql6b')">📋 Copy SQL Buku</button>
+    <script>
+        // Data
+        const assessmentData = {
+            1: {
+                question: "Sudah pernah approach tokoh masyarakat (RT/RW/Ketua Komunitas)?",
+                options: [
+                    { icon: "✅", text: "Sudah, sering dan nyaman", value: "yes" },
+                    { icon: "❌", text: "Belum pernah / Jarang", value: "no" }
+                ]
+            },
+            2: {
+                question: "Punya nasabah yang sering chat atau suka bercerita?",
+                options: [
+                    { icon: "😊", text: "Ada beberapa yang akrab", value: "yes" },
+                    { icon: "😐", text: "Jarang komunikasi", value: "no" }
+                ]
+            },
+            3: {
+                question: "Lebih nyaman ngobrol 1-on-1 atau di depan umum?",
+                options: [
+                    { icon: "👤", text: "1-on-1, lebih personal", value: "b2c" },
+                    { icon: "👥", text: "Depan umum, lebih energik", value: "b2b" }
+                ]
+            }
+        };
 
-            <div class="screenshot-box">
-<span class="result">Query OK, 3 rows affected (0.004 sec)</span><br>
-Records: 3  Duplicates: 0  Warnings: 0
-            </div>
+        let currentQuestion = 1;
+        let answers = {};
 
-            <div class="tips-elen">
-                <strong>💝 Penjelasan buat Elen:</strong><br>
-                - <span class="highlight">INSERT INTO</span> = masukkan data<br>
-                - <span class="highlight">VALUES</span> = nilai yang dimasukkan<br>
-                - Urutannya harus sesuai dengan urutan kolom ya!<br>
-                - Teks pakai tanda petik ('), angka tidak perlu petik
-            </div>
+        // Splash screen
+        setTimeout(() => {
+            document.getElementById('splash').classList.add('hidden');
+        }, 2000);
 
-            <p><strong>Cek data Anggota:</strong></p>
-            <div class="cmd-box">
-<span class="mysql-prompt">MariaDB [Perpustakaan]></span> <span class="sql-command">SELECT * FROM Anggota;</span>
-            </div>
+        // Navigation
+        function startB2B() {
+            document.getElementById('modeSelection').classList.remove('active');
+            document.getElementById('b2bMission').classList.add('active');
+        }
 
-            <div class="screenshot-box">
-+------------+-------+-------------------+---------------+------------------+<br>
-| id_anggota | nama  | alamat            | nomor_telpon  | email            |<br>
-+------------+-------+-------------------+---------------+------------------+<br>
-| <span style="color: #0f0;">101</span>        | <span style="color: #0f0;">Munfi</span> | <span style="color: #0f0;">Jl. Juanda</span>        | <span style="color: #0f0;">08592839328</span>   | <span style="color: #0f0;">munfi@gmail.com</span>  |<br>
-| <span style="color: #0f0;">102</span>        | <span style="color: #0f0;">Jupi</span>  | <span style="color: #0f0;">Jl. Wr. Supratman</span> | <span style="color: #0f0;">08112783738</span>   | <span style="color: #0f0;">jupi@gmail.com</span>   |<br>
-| <span style="color: #0f0;">103</span>        | <span style="color: #0f0;">Elen</span>  | <span style="color: #0f0;">Jl. Poltangan</span>     | <span style="color: #0f0;">0813048393</span>    | <span style="color: #0f0;">elen@gmail.com</span>   |<br>
-+------------+-------+-------------------+---------------+------------------+<br>
-<span class="result">3 rows in set (0.000 sec)</span>
-            </div>
+        function startB2C() {
+            document.getElementById('modeSelection').classList.remove('active');
+            document.getElementById('b2cMission').classList.add('active');
+        }
 
-            <p><strong>Cek data Buku:</strong></p>
-            <div class="screenshot-box">
-+-----------+-------------------------+------------------+------+<br>
-| kode_buku | judul                   | pengarang        | stok |<br>
-+-----------+-------------------------+------------------+------+<br>
-| <span style="color: #0f0;">111</span>       | <span style="color: #0f0;">Basis Data Untuk Pemula</span> | <span style="color: #0f0;">Ade Supriatna</span>    | <span style="color: #0f0;">4</span>    |<br>
-| <span style="color: #0f0;">222</span>       | <span style="color: #0f0;">Ekonomi Syariah</span>         | <span style="color: #0f0;">Bintang Gemilang</span> | <span style="color: #0f0;">7</span>    |<br>
-| <span style="color: #0f0;">333</span>       | <span style="color: #0f0;">Desain Grafis</span>           | <span style="color: #0f0;">Sudiyono</spa
+        function startAssessment() {
+            document.getElementById('modeSelection').classList.remove('active');
+            document.getElementById('assessment').classList.add('active');
+            renderQuestion();
+        }
+
+        function backToMenu() {
+            document.getElementById('b2bMission').classList.remove('active');
+            document.getElementById('b2cMission').classList.remove('active');
+            document.getElementById('assessment').classList.remove('active');
+            document.getElementById('modeSelection').classList.add('active');
+            currentQuestion = 1;
+            answers = {};
+        }
+
+        // Assessment Logic
+        function renderQuestion() {
+            const data = assessmentData[currentQuestion];
+            document.getElementById('questionText').textContent = data.question;
+
+            const progress = (currentQuestion / 3) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = data.options.map(opt => `
+                <button class="option-btn" onclick="answerAssessment(${currentQuestion}, '${opt.value}')">
+                    <span class="option-icon">${opt.icon}</span>
+                    <span>${opt.text}</span>
+                </button>
+            `).join('');
+        }
+
+        function answerAssessment(qNum, value) {
+            answers[qNum] = value;
+
+            if (qNum === 1 && value === 'yes') {
+                // Langsung ke B2B
+                setTimeout(() => {
+                    document.getElementById('assessment').classList.remove('active');
+                    document.getElementById('b2bMission').classList.add('active');
+                }, 300);
+                return;
+            }
+
+            if (qNum === 2 && value === 'no') {
+                // Langsung ke B2C
+                setTimeout(() => {
+                    document.getElementById('assessment').classList.remove('active');
+                    document.getElementById('b2cMission').classList.add('active');
+                }, 300);
+                return;
+            }
+
+            if (qNum < 3) {
+                currentQuestion++;
+                setTimeout(renderQuestion, 300);
+            } else {
+                // Final decision
+                setTimeout(() => {
+                    document.getElementById('assessment').classList.remove('active');
+                    if (value === 'b2b') {
+                        document.getElementById('b2bMission').classList.add('active');
+                    } else {
+                        document.getElementById('b2cMission').classList.add('active');
+                    }
+                }, 300);
+            }
+        }
+
+        // Battle Mode
+        let currentBattle = {};
+
+        function startBattle(location, target, type) {
+            currentBattle = { location, target, type };
+            document.getElementById('battleTargetName').textContent = target + ' - ' + location;
+            document.getElementById('battleType').textContent = type === 'b2b' ? '🔥 B2B CHALLENGER' : '🌉 B2C BRIDGE';
+            document.getElementById('battleMode').classList.add('active');
+        }
+
+        function closeBattle() {
+            document.getElementById('battleMode').classList.remove('active');
+            document.getElementById('battleNotes').value = '';
+        }
+
+        function takePhoto() {
+            alert('📸 Fitur kamera aktif!\n\nAmbil foto:\n1. Foto lokasi/bangunan\n2. Foto bersama target (jika diizinkan)\n3. Foto dokumen/tanda tangan');
+        }
+
+        function showScript() {
+            const scripts = {
+                'b2b': `📝 SCRIPT B2B - APPROACH RT/RW:
+
+"Assalamu'alaikum Pak RT. Perkenalkan, saya [Nama] dari FIF Group Finatra. 
+
+Maaf mengganggu waktunya sebentar. Saya lihat di kelurahan ini performa pembayaran warga sangat bagus, [X]% tepat waktu. Kami ingin membuka peluang kerjasama dengan RT Bapak sebagai Agent FIF.
+
+Keuntungannya:
+✅ Komisi menarik setiap deal
+✅ Training gratis
+✅ Modal minim, bisa dari rumah
+
+Bapak bersedia saya jelaskan lebih detail? Atau ada waktu untuk meeting singkat besok?"
+
+💡 Tips: Bawa data kontrak di kelurahan tersebut sebagai bukti potensi`,
+
+                'b2c': `📝 SCRIPT B2C - REFERRAL:
+
+"Selamat pagi Bu [Nama]! Maaf mengganggu. Saya [Nama] dari FIF Group.
+
+Bu, selamat ya jadi nasabah teladan kami! Pembayaran selalu tepat waktu. 
+
+Btw Bu, di lingkungan sekitar/ grup arisan/ teman kerja Bu, ada yang butuh pinjaman modal usaha? Kalau ada yang deal dari referral Bu, Bu dapat voucher Rp100rb atau potongan angsuran.
+
+Gampang kok, cuma kenalin saya aja, sisanya saya yang handle. Ada yang terlintas di pikiran Bu?"
+
+💡 Tips: Sebutkan nama spesifik jika Bu punya kenalan tertentu`
+            };
+
+            alert(scripts[currentBattle.type]);
+        }
+
+        function showTips() {
+            const tips = {
+                'b2b': `💡 TIPS B2B SUCCESS:
+
+1. ⏰ Waktu Terbaik: Selasa-Kamis, 10:00-11:30 atau 14:00-16:00
+2. 👔 Dress Code: Rapi, kemeja putih, bawa ID card FIF
+3. 📋 Bawa Selalu: Brosur, formulir, kalkulator, powerbank
+4. 🎯 Target Harian: 3 RT approach, minimal 1 follow-up
+5. 🚫 Hindari: Janji berlebihan, pushy, waktu makan/malam`,
+
+                'b2c': `💡 TIPS B2C SUCCESS:
+
+1. 💬 Personal Touch: Ingat detail nasabah (nama anak, usaha, dll)
+2. 🎁 Incentive: Tawarkan voucher/ potongan yang jelas
+3. 📱 Follow Up: WA 2 hari setelah visit jika belum ada referral
+4. 🎯 Quality > Quantity: Cari 1 super connector, bukan 10 nasabah biasa
+5. 🤝 Jaga Hubungan: Referral datang dari trust, bukan sekali deal`
+            };
+
+            alert(tips[currentBattle.type]);
+        }
+
+        function contactSupport() {
+            alert('🆘 BANTUAN DARURAT\n\nHubungi:\n📞 SCSH: 0812-XXXX-XXXX\n📞 Tim Partnership: 0813-XXXX-XXXX\n\nAtau kirim foto lokasi + kendala ke grup WA "Finatra Partnership"');
+        }
+
+        function submitSuccess() {
+            const notes = document.getElementById('battleNotes').value;
+            if (!notes.trim()) {
+                alert('⚠️ Silakan isi catatan hasil pertemuan terlebih dahulu!');
+                return;
+            }
+
+            document.getElementById('successEmoji').textContent = currentBattle.type === 'b2b' ? '🏆' : '💎';
+            document.getElementById('successText').textContent = currentBattle.type === 'b2b' ? 'RT/RW DEAL!' : 'REFERRAL LOCKED!';
+            document.getElementById('successSub').textContent = currentBattle.type === 'b2b'
+                ? '+100 XP | +1 Community Hero | Streak +1'
+                : '+50 XP | +1 Connector Badge | Voucher Rp100rb';
+
+            document.getElementById('successOverlay').classList.add('active');
+
+            // Simulate SCSH notification
+            console.log('📧 Notifikasi ke SCSH:', {
+                pa: 'Zefanya Williams',
+                target: currentBattle.target,
+                location: currentBattle.location,
+                result: 'SUCCESS',
+                notes: notes,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function submitFail() {
+            const notes = document.getElementById('battleNotes').value;
+            if (!notes.trim()) {
+                alert('⚠️ Silakan isi alasan follow up (contoh: minta waktu pikir, butuh izin keluarga, dll)');
+                return;
+            }
+
+            document.getElementById('successEmoji').textContent = '📋';
+            document.getElementById('successText').textContent = 'FOLLOW UP TERCATAT';
+            document.getElementById('successSub').textContent = '+10 XP | Jangan menyerah! | Reminder di-set';
+            document.getElementById('successOverlay').classList.add('active');
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('active');
+            closeBattle();
+        }
+
+        // Service Worker for offline support (simplified)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+                self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+            `)).catch(() => console.log('SW not registered'));
+        }
+    </script>
+</body>
+
+</html>'''
