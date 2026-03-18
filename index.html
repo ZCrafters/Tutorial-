@@ -1,7 +1,8 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-.root{max-width:780px;padding:2rem 1rem 4rem;font-family:var(--font-sans)}
+body{margin:0;background:var(--color-background-primary)}
+.root{max-width:780px;margin:0 auto;padding:2rem 1rem 4rem;font-family:var(--font-sans)}
 p{font-size:14px;color:var(--color-text-secondary);line-height:1.8;margin-bottom:.9rem}
 p:last-child{margin-bottom:0}
 strong{font-weight:500;color:var(--color-text-primary)}
@@ -211,6 +212,32 @@ em{font-style:italic;color:var(--color-text-primary)}
 .tw{border-radius:14px;padding:2rem;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);text-align:center;margin-top:2rem}
 .tw-t{font-size:15px;font-weight:500;color:var(--color-text-primary);line-height:1.75;font-style:italic;margin-bottom:8px}
 .tw-s{font-size:12px;color:var(--color-text-secondary)}
+
+@media (max-width:900px){
+  .kpi-g,.id3,.dg3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mx,.sc2,.risk2,.kpilink{grid-template-columns:1fr}
+}
+
+@media (max-width:640px){
+  .root{padding:1rem .75rem 2rem}
+  .hero{padding:1.35rem 1.1rem}
+  .hero-h{font-size:26px;line-height:1.2}
+  .hero-sub{max-width:none}
+  .kpi-g,.id3,.dg3{grid-template-columns:1fr}
+  .prog{padding:.75rem;gap:8px;flex-wrap:wrap}
+  .prog-l,.prog-ct{width:100%}
+  .bab-hd{padding:.85rem .95rem;align-items:flex-start}
+  .bab-ri{align-self:center}
+  .bab-bd{padding:1.15rem .95rem}
+  .ml-wrap{flex-direction:column}
+  .ml-col{border-right:none;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .ml-col:last-child{border-bottom:none}
+  .tbl{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tbl th,.tbl td{white-space:nowrap}
+  .fn-r{align-items:flex-start;flex-direction:column;gap:4px}
+  .fn-l{width:auto;text-align:left}
+  .fn-tr{width:100%}
+}
 </style>
 
 <div class="root">
@@ -766,7 +793,7 @@ em{font-style:italic;color:var(--color-text-primary)}
           <div class="stp-n" style="background:#FAEEDA;color:#854F0B">3</div>
           <div class="stp-c">
             <div class="st">Rayakan keberhasilan bersama mitra</div>
-            <div class="sd">Ketika nasabah yang direkomendasikan mitra berhasil cair, sampaikan kabar baiknya: "Alhamdulillah Pak, [Nama] yang Bapak rekomendasikan sudah cair. Terima kasih rekomendasinya, beliau sangat terbantu." Ini memotivasi mitra untuk terus terlibat aktif.</sd>
+            <div class="sd">Ketika nasabah yang direkomendasikan mitra berhasil cair, sampaikan kabar baiknya: "Alhamdulillah Pak, [Nama] yang Bapak rekomendasikan sudah cair. Terima kasih rekomendasinya, beliau sangat terbantu." Ini memotivasi mitra untuk terus terlibat aktif.</div>
           </div>
         </div>
         <div class="stp">
